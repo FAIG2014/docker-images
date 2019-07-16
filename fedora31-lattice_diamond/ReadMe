@@ -1,0 +1,6 @@
+
+
+how to build:
+
+
+docker build -t fedora31-lattice_diamond .
