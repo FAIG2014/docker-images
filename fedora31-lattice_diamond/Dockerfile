@@ -7,24 +7,29 @@ ARG MIRROR=http://files.latticesemi.com/Diamond/3.11/
 ARG DIAMOND=diamond_3_11-base_x64-396-4-x86_64-linux.rpm
 
 
-RUN    yum -y install wget \
-    && yum clean all
-#http://files.latticesemi.com/Diamond/3.11/diamond_3_11-base_x64-396-4-x86_64-linux.rpm
+RUN yum install -y freetype libSM libXrender fontconfig libXext libXt net-tools
+ENV QT_GRAPHICSSYSTEM "native"
 
 
 
-RUN ls -la
 
 
+
+# install using a locally downloaded rpm (fast and dirty)
+#COPY diamond_3_11-base_x64-396-4-x86_64-linux.rpm /tmp/
+#RUN sudo rpm -Uvh /tmp/diamond_3_11-base_x64-396-4-x86_64-linux.rpm
+
+
+# install using the wget (slow and clean)
 RUN cd /tmp \
-    && wget -q $MIRROR$DIAMOND
+    && wget -q $MIRROR$DIAMOND \
+    && yum install -y /tmp/$DIAMOND \
+    && rm /tmp/$DIAMOND
 
-#RUN    yum install -y /tmp/$DIAMOND \
-#    && rm $DIAMOND
 
+ENV PATH="/usr/local/diamond/3.11_x64/bin/lin64/:${PATH}"
+COPY license.dat /usr/local/diamond/3.11_x64/license/license.dat
+COPY diamond-doc /usr/bin/
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 

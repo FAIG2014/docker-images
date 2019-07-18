@@ -10,7 +10,7 @@ RUN    yum -y groupinstall 'base-x' \
     && yum clean all
 
 
-RUN    yum -y install wget dpkg \
+RUN    yum -y install wget dpkg firefox \
     && yum clean all
 
 # install gosu for a better su+exec command
@@ -23,6 +23,7 @@ RUN dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
 
 COPY adduser.conf /etc/adduser.conf
 COPY entrypoint.sh /usr/local/bin/entrypoint_fedora31-gui.sh
+COPY .bashrc /usr/.bashrc
 
 # Give ourselves sudo
 RUN    mkdir -p /etc/sudoers.d \

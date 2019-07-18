@@ -17,7 +17,6 @@ docker run \
     -e LOCAL_USER_NAME=${USERNAME} \
     -v ${HOME}/.Xauthority:${HOME}/.Xauthority \
     -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-    -v /private:/private \
     -w ${PWD} \
     -v ${DOCKER_WORKSPACE}:${DOCKER_WORKSPACE} \
     -v /tmp:/tmp \
