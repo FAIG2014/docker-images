@@ -15,15 +15,19 @@ RUN yum install -y unixODBC.i686 ncurses-compat-libs-6.1-10.20180923.fc30.i686 n
 
 
 # install using a locally downloaded binary (fast and dirty)
-COPY $MODELSIM /tmp/
-RUN /tmp/$MODELSIM --mode unattended --installdir $QUARTUS_INSTALL_DIR  --modelsim_edition modelsim_ase --accept_eula 1
+#COPY $MODELSIM /tmp/
+#RUN /tmp/$MODELSIM --mode unattended --installdir $QUARTUS_INSTALL_DIR  --modelsim_edition modelsim_ase --accept_eula 1
 
 
 # install using the wget (slow and clean)
-#RUN cd /tmp \
-#    && wget -q $MIRROR$MODELSIM \
-#    && yum install -y /tmp/$DIAMOND \
-#    && rm /tmp/$DIAMOND
+RUN cd /tmp \
+    && echo "download modelsim" \
+    && wget $MIRROR$MODELSIM \
+    && echo "install modelsim" \
+    && chmod +x /tmp/$MODELSIM \
+    && /tmp/$MODELSIM --mode unattended --installdir $QUARTUS_INSTALL_DIR  --modelsim_edition modelsim_ase --accept_eula 1 \
+    && echo "clean up" \
+    && rm /tmp/$MODELSIM
 
 
 ENV PATH="${QUARTUS_INSTALL_DIR}/modelsim_ase/bin:${PATH}"
@@ -61,17 +65,3 @@ RUN mkdir /tmp/fontconfig \
 
 RUN cp $QUARTUS_INSTALL_DIR/modelsim_ase/vco $QUARTUS_INSTALL_DIR/modelsim_ase/vco.bak \
     && sed 's/.*dir=`dirname.*/&\nexport LD_LIBRARY_PATH=\$\{dir\}\/..\/lib32/' $QUARTUS_INSTALL_DIR/modelsim_ase/vco.bak > $QUARTUS_INSTALL_DIR/modelsim_ase/vco
-
-
-#libpng15.i686
-
-#yum deplist libfreetype6 | awk '/provider:/ {print $2}' | sort -u | xargs yum -y install
-# libpng15-1.5.30-7.fc30.i686 glibc-devel-2.29.9000-32.fc31.i686 
-
-#sudo cp usr/lib/* /opt/intelFPGA/18.0/modelsim_ase/lib/
-
-
-#
-
-#https://wiki.archlinux.org/index.php/Altera_Design_Software#With_freetype2_2.5.0.1-1
-
