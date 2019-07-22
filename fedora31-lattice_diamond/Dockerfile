@@ -7,7 +7,8 @@ ARG MIRROR=http://files.latticesemi.com/Diamond/3.11/
 ARG DIAMOND=diamond_3_11-base_x64-396-4-x86_64-linux.rpm
 
 
-RUN yum install -y freetype libSM libXrender fontconfig libXext libXt net-tools
+RUN yum install -y freetype libSM libXrender fontconfig libXext libXt net-tools \
+    && yum clean all
 ENV QT_GRAPHICSSYSTEM "native"
 
 
@@ -24,7 +25,8 @@ ENV QT_GRAPHICSSYSTEM "native"
 RUN cd /tmp \
     && wget -q $MIRROR$DIAMOND \
     && yum install -y /tmp/$DIAMOND \
-    && rm /tmp/$DIAMOND
+    && rm /tmp/$DIAMOND \
+    && yum clean all
 
 
 ENV PATH="/usr/local/diamond/3.11_x64/bin/lin64/:${PATH}"
