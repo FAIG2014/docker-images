@@ -10,7 +10,7 @@ ARG MODELSIM=ModelSimSetup-18.1.0.625-linux.run
 
 ENV QUARTUS_INSTALL_DIR=/opt/intelFPGA/18.0
 
-RUN yum install -y unixODBC.i686 ncurses-compat-libs-6.1-10.20180923.fc30.i686 ncurses-libs.i686 libXext.i686 \
+RUN yum install -y unixODBC.i686 ncurses-compat-libs.i686 ncurses-libs.i686 libXext.i686 \
                     glibc.i686 libXft.i686 libpng15.i686
 
 
@@ -21,12 +21,12 @@ RUN yum install -y unixODBC.i686 ncurses-compat-libs-6.1-10.20180923.fc30.i686 n
 
 # install using the wget (slow and clean)
 RUN cd /tmp \
-    && echo "download modelsim" \
-    && wget $MIRROR$MODELSIM \
-    && echo "install modelsim" \
+    && echo "downloading modelsim" \
+    && wget -q $MIRROR$MODELSIM \
+    && echo "installing modelsim" \
     && chmod +x /tmp/$MODELSIM \
     && /tmp/$MODELSIM --mode unattended --installdir $QUARTUS_INSTALL_DIR  --modelsim_edition modelsim_ase --accept_eula 1 \
-    && echo "clean up" \
+    && echo "cleaning up" \
     && rm /tmp/$MODELSIM
 
 

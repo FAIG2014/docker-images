@@ -10,7 +10,7 @@ RUN    yum -y groupinstall 'base-x' \
     && yum clean all
 
 
-RUN    yum -y install wget dpkg firefox which vim \
+RUN    yum -y install wget dpkg firefox which vim g++ autoconf python pip python-devel \
     && yum clean all
 
 # install gosu for a better su+exec command
@@ -34,3 +34,5 @@ RUN    mkdir -p /etc/sudoers.d \
 ENV QT_GRAPHICSSYSTEM "native"
 
 ENTRYPOINT ["/usr/local/bin/entrypoint_fedora31-gui.sh"]
+
+CMD ["/usr/bin/bash"]
