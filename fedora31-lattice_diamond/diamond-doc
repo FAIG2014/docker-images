@@ -1,4 +1,0 @@
-#!/bin/bash
-
-firefox /usr/local/diamond/3.11_x64/docs/webhelp/eng/start_page.htm
-
