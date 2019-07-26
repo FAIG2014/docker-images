@@ -1,0 +1,18 @@
+
+
+
+
+this build is expecting the licence to be present in the folder.
+
+
+
+
+
+few things to remeber:
+
+to start lattice-diamond
+$diamond
+
+
+to see the doc (somehow, lattice is embeding their own libc, so it make firefox sad)
+$diamond-doc
