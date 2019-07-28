@@ -1,26 +1,26 @@
-FROM fedora31-gui:latest
+FROM fedora:30
+
 
 USER root
-
 
 ARG MIRROR=http://download.altera.com/akdlm/software/acdsinst/18.1std/625/ib_installers/
 ARG MODELSIM=ModelSimSetup-18.1.0.625-linux.run
 
 
-
+ENV QT_GRAPHICSSYSTEM "native"
 ENV QUARTUS_INSTALL_DIR=/opt/intelFPGA/18.0
 
+# install few things that will be needed for the install
+RUN    yum -y install wget python cpio \
+    && yum clean all
+
+# install 32b libs for modelsim
 RUN yum install -y unixODBC.i686 ncurses-compat-libs.i686 ncurses-libs.i686 libXext.i686 \
                     glibc.i686 libXft.i686 libpng15.i686 \
     && yum clean all
 
 
-# install using a locally downloaded binary (fast and dirty)
-#COPY $MODELSIM /tmp/
-#RUN /tmp/$MODELSIM --mode unattended --installdir $QUARTUS_INSTALL_DIR  --modelsim_edition modelsim_ase --accept_eula 1
-
-
-# install using the wget (slow and clean)
+# install using the wget
 RUN cd /tmp \
     && echo "downloading modelsim" \
     && wget -q $MIRROR$MODELSIM \
@@ -31,13 +31,16 @@ RUN cd /tmp \
     && rm /tmp/$MODELSIM
 
 
-ENV PATH="${QUARTUS_INSTALL_DIR}/modelsim_ase/bin:${PATH}"
-ENV QT_GRAPHICSSYSTEM "native"
 
+ENV PATH="${QUARTUS_INSTALL_DIR}/modelsim_ase/bin:${PATH}"
+
+#https://github.com/neo0x3d/intelfpga-altera-modelsim-on-fedora
+#https://wiki.archlinux.org/index.php/Altera_Design_Software#With_freetype2_2.5.0.1-1
 
 
 # to solve the problem: "With the kernel 4.x and Upwards"
 RUN ln -s $QUARTUS_INSTALL_DIR/modelsim_ase/linux $QUARTUS_INSTALL_DIR/modelsim_ase/linux_rh60
+
 
 
 
@@ -66,3 +69,9 @@ RUN mkdir /tmp/fontconfig \
 
 RUN cp $QUARTUS_INSTALL_DIR/modelsim_ase/vco $QUARTUS_INSTALL_DIR/modelsim_ase/vco.bak \
     && sed 's/.*dir=`dirname.*/&\nexport LD_LIBRARY_PATH=\$\{dir\}\/..\/lib32/' $QUARTUS_INSTALL_DIR/modelsim_ase/vco.bak > $QUARTUS_INSTALL_DIR/modelsim_ase/vco
+
+
+
+# text requierement
+RUN    yum -y install  python3-tox \
+    && yum clean all
