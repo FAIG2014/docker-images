@@ -1,0 +1,12 @@
+{
+
+    "source_files" : [
+        "unit_test.svh"
+    ],
+    "lib_path_dependencies" : [
+        "rtl/misc"
+    ],
+    "need_be_included": "true"
+
+}
+

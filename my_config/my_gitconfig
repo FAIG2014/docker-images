@@ -1,0 +1,13 @@
+[user]
+    email = francis.gagnaire@gmail.com
+    name = Francis Gagnaire
+
+[merge]
+    tool = meld
+
+[core]
+    editor = vim
+    autocrlf = input
+
+[color]
+    ui = true

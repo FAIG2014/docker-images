@@ -1,0 +1,21 @@
+
+# python
+*.pyc
+*.egg-info/
+__pycache__/
+
+
+# iverilog
+**/a.out
+
+
+# modelsim
+transcript
+vsim.wlf
+work/
+modelsim.ini
+
+
+#verilator
+obj_dir
+

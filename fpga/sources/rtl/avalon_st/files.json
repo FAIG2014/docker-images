@@ -1,0 +1,12 @@
+{
+
+    "source_files" : [
+        "avalon_st_if.sv"
+    ],
+    "lib_path_dependencies" : [
+        "rtl/misc"
+
+    ]
+
+}
+

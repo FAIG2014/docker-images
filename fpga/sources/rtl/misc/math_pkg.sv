@@ -12,7 +12,7 @@ package math_pkg;
 
     function integer clog2_range(longint value);
         // TODO: this is not done properly 
-        clog2_range = clog2();
+        clog2_range = clog2(value);
     endfunction
 
 

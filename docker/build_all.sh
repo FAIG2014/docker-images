@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-docker build -t centos-modelsim centos-modelsim
-
 
 docker build -t fedora31-gui fedora-gui
 

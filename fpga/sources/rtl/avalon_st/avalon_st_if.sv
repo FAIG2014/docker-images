@@ -1,12 +1,11 @@
 
 
 
-
 interface avalon_st_if
-  #(
-    parameter DATAW
+    #(
+        parameter DATAW
     )
-   ();
+    ();
    
     logic                                   valid;
     logic                                   sop;
@@ -18,24 +17,24 @@ interface avalon_st_if
 
     modport rx
     (
-     input  valid,
-     input  sop,
-     input  eop,
-     input  error,
-     input  empty,
-     input  data,
-     output ready
+        input  valid,
+        input  sop,
+        input  eop,
+        input  error,
+        input  empty,
+        input  data,
+        output ready
      );
     
     modport tx 
     (
-     output valid,
-     output sop,
-     output eop,
-     output error,
-     output empty,
-     output data,
-     input  ready
+        output valid,
+        output sop,
+        output eop,
+        output error,
+        output empty,
+        output data,
+        input  ready
      );
 
 endinterface

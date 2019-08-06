@@ -1,0 +1,13 @@
+{
+
+    "source_files" : [
+        "math_pkg.sv",
+        "logs.sv"
+    ],
+    "lib_path_dependencies" : [
+
+    ],
+    "need_be_included": "true"
+
+}
+
