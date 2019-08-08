@@ -126,10 +126,10 @@ class CompilerVerilator(SimuCompiler):
         build_lib = deps.FpgaLib(self.current_folder)
         sv_top_name = self.sv_top_name(top_level_file_path)
 
-        cmd = "verilator -Wall --cc %s.sv " % sv_top_name
+        cmd = "verilator -Wall --cc %s.sv  -GTEST=2" % sv_top_name
 
         # define
-        #cmd += " +define+SIMULATION "
+        cmd += " +define+SIMULATION --dump-defines "
 
         # includes
         for include in build_lib.get_full_include_dependencies():
@@ -151,3 +151,5 @@ class CompilerVerilator(SimuCompiler):
         sv_top_name = self.sv_top_name(top_level_file_path)
         cmd = "obj_dir/V%s" % sv_top_name
         return [cmd]
+
+

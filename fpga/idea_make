@@ -2,17 +2,30 @@
 makefile:
 
 https://ohwr.org/project/hdl-make/wikis/home
-
 to folow project: https://www.ohwr.org/project/wr-cores
-
+=> too complicated
 
 
 
 for unit test stuff:
 https://github.com/damofthemoon/svut
+> not advanced 
 
 
 
 to be checked out:
 https://github.com/antmicro/cocotb-verilator-build
+> good idea. not on master yet.
+  => to folow up
+
+
+
+# interesting lib that knows about many compilers
+https://github.com/olofk/edalize/tree/master/edalize
+
+
+
+
+xilinx simulator:
+https://www.xilinx.com/support/answers/63986.html
 

@@ -67,19 +67,21 @@
     $display("\n%c[0;36mINFO:     Testsuite execution started%c[0m\n", 27, 27);
 `endif
 
+/* verilator lint_off WIDTH */
 `ifndef UNIT_TEST
 `define UNIT_TEST(_NAME_) \
     begin : _NAME_ \
-        static string _testName = `"_NAME_`"; \
+        string _testName; \
+        _testName = `"_NAME_`"; \
         `INFO($sformatf(`"%s::RUNNING`", _testName)); \
         setup(); \
         unit_test_error = 0; \
         unit_test_nb_test = unit_test_nb_test + 1;
 `endif
+/* verilator lint_on WIDTH */
 
 `ifndef UNIT_TEST_END
 `define UNIT_TEST_END \
-        #0; \
         teardown(); \
         if (unit_test_error == 0) begin \
             unit_test_nb_test_success = unit_test_nb_test_success + 1; \
