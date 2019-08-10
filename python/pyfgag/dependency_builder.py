@@ -22,6 +22,11 @@ def get_source_path(json_path):
     source_path = os.path.join(workspace_path, "fpga-projects", "fpga", "sources")
     return source_path
 
+def get_build_path(path):
+    workspace_path = get_workspace_path(path)
+    build_path = os.path.join(workspace_path, "fpga-projects", "fpga", "builds")
+    return build_path
+
 
 
 class FpgaLib(object):

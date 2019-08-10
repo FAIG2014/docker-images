@@ -2,12 +2,15 @@
 import os
 import sys
 import pyfgag.dependency_builder as deps
-
+import subprocess
+import pathlib
 
 
 class SimuCompiler(object):
-    def __init__(self):
+    def __init__(self, build_dir=os.getcwd()):
         self.current_folder = os.getcwd()
+        self.build_dir = build_dir
+        pathlib.Path(self.build_dir).mkdir(parents=True, exist_ok=True)
 
     def create_cmds_compile(self, top_level_file_path:str):
         raise NotImplementedError("Subclasses should implement this!")
@@ -19,8 +22,8 @@ class SimuCompiler(object):
         cmds = self.create_cmds_compile(top_level_file_path=top_level_file_path)
         
         for cmd in cmds:
-            print("RUNINGL %s" % cmd)
-            cmd_ret = os.system(cmd)
+            print("RUNING %s" % cmd)
+            cmd_ret = subprocess.call(cmd, shell=True, cwd=self.build_dir)
             if cmd_ret:
                 print("ERROR: compiles went wrong")
                 raise Exception()
@@ -29,7 +32,7 @@ class SimuCompiler(object):
         cmds = self.create_cmds_run(top_level_file_path=top_level_file_path)
         
         for cmd in cmds:
-            cmd_ret = os.system(cmd)
+            cmd_ret = subprocess.call(cmd, shell=True, cwd=self.build_dir)
             if cmd_ret:
                 raise Exception()
 
@@ -38,11 +41,13 @@ class SimuCompiler(object):
         # we are assuming that we are logical, and the file name is the module name.
         basename = os.path.basename(file_path)
         return os.path.splitext(basename)[0]
+    
+
 
 
 class CompilerIverilog(SimuCompiler):
-    def __init__(self):
-        super(CompilerIverilog, self).__init__()
+    def __init__(self, build_dir=os.getcwd()):
+        super(CompilerIverilog, self).__init__(build_dir=build_dir)
 
     def create_cmds_compile(self, top_level_file_path:str):
         
@@ -73,8 +78,8 @@ class CompilerIverilog(SimuCompiler):
 
 
 class CompilerModelsim(SimuCompiler):
-    def __init__(self):
-        super(CompilerModelsim, self).__init__()
+    def __init__(self, build_dir=os.getcwd()):
+        super(CompilerModelsim, self).__init__(build_dir=build_dir)
 
     def create_cmds_compile(self, top_level_file_path:str):
         cmds = []
@@ -111,8 +116,8 @@ class CompilerModelsim(SimuCompiler):
 
 
 class CompilerVerilator(SimuCompiler):
-    def __init__(self):
-        super(CompilerVerilator, self).__init__()
+    def __init__(self, build_dir=os.getcwd()):
+        super(CompilerVerilator, self).__init__(build_dir=build_dir)
     
     @staticmethod
     def sv_top_name(top_level_file_path:str):
@@ -153,3 +158,37 @@ class CompilerVerilator(SimuCompiler):
         return [cmd]
 
 
+class CompilerVivado(SimuCompiler):
+    def __init__(self,  build_dir=os.getcwd()):
+        super(CompilerVivado, self).__init__(build_dir=build_dir)
+    
+
+    def create_cmds_compile(self, top_level_file_path:str):
+        cmds = []
+        build_lib = deps.FpgaLib(self.current_folder)
+        sv_top_name = CompilerVivado.get_module_name_from_path(top_level_file_path)
+
+        cmd = "xvlog -sv "
+
+        # define
+        cmd += " -d SIMULATION"
+
+        # includes
+        for include in build_lib.get_full_include_dependencies():
+            cmd += " -i %s " % include
+
+        # files
+        for sv_file in build_lib.get_full_file_dependencies():
+            cmd += " %s " % sv_file
+        
+        cmd += " %s "  % top_level_file_path
+
+        cmds.append(cmd)
+
+        cmds.append("xelab -debug typical %s -s %s_sim" % (sv_top_name, sv_top_name) )
+
+        return cmds
+    
+    def create_cmds_run(self, top_level_file_path:str):
+        cmd = ""
+        return [cmd]

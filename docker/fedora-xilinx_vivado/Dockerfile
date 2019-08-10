@@ -35,7 +35,8 @@ RUN cd /tmp \
 #    && rm -rf * \
 #    && rm -rf /root/.Xilinx 
 
-RUN ln -s /lib64/libtinfo.so.6 /lib64/libtinfo.so.5
+RUN ln -s /lib64/libtinfo.so.6 /lib64/libtinfo.so.5 \
+    && ln -s /lib64/libncurses.so.6 /lib64/libncurses.so.5
 
 ENV PATH="/opt/xilinx/Vivado/2019.1/bin/:${PATH}"
 
