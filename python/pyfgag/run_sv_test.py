@@ -54,7 +54,7 @@ def entry_point():
     build_dir   = get_build_path_for_pwd()
     tests_sv    = find_sv_unit_tests()
     tests_cpp   = find_verilator_unit_tests()
-    simulator   = "vivado"
+    simulator   = "modelsim"
 
     for test in tests_sv:
 
@@ -65,7 +65,7 @@ def entry_point():
             continue
 
         elif "modelsim" in simulator:
-            compiler = compilers.CompilerModelsim()
+            compiler = compilers.CompilerModelsim(build_dir=build_dir)
 
         elif "vivado" in simulator:
             compiler = compilers.CompilerVivado(build_dir=build_dir)

@@ -2,7 +2,7 @@
 
     "source_files" : [
         "math_pkg.sv",
-        "logs.sv"
+        "logs.svh"
     ],
     "lib_path_dependencies" : [
 

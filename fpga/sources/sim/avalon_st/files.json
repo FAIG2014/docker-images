@@ -1,7 +1,9 @@
 {
 
     "source_files" : [
-        "avalon_st_source.sv"
+        "packet_pkg.sv",
+        "avalon_st_source.sv",
+        "avalon_st_sink.sv"
 
     ],
     "lib_path_dependencies" : [

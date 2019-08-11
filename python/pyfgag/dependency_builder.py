@@ -73,7 +73,7 @@ class FpgaLib(object):
             full_deps_this_lib = FpgaLib(checking).get_full_lib_dependencies(libs_dep)
             libs_to_check += full_deps_this_lib
             #print("checked:%s"% full_deps_this_lib)
-            libs_dep.extend(full_deps_this_lib)
+            libs_dep[:0] = full_deps_this_lib
             #print("checked: done %s"% libs_dep)
 
         #print("level done :%s" % libs_dep)

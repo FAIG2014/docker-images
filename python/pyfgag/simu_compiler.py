@@ -32,6 +32,7 @@ class SimuCompiler(object):
         cmds = self.create_cmds_run(top_level_file_path=top_level_file_path)
         
         for cmd in cmds:
+            print("RUNING %s" % cmd)
             cmd_ret = subprocess.call(cmd, shell=True, cwd=self.build_dir)
             if cmd_ret:
                 raise Exception()
@@ -190,5 +191,14 @@ class CompilerVivado(SimuCompiler):
         return cmds
     
     def create_cmds_run(self, top_level_file_path:str):
-        cmd = ""
-        return [cmd]
+        sv_top_name = CompilerVivado.get_module_name_from_path(top_level_file_path)
+        cmds = [] 
+        cmd = """echo "run 20ns
+current_time
+quit" > run.tcl
+"""
+        cmds.append(cmd)
+        cmd = "xsim %s_sim -tclbatch run.tcl" % (sv_top_name)
+
+        cmds.append(cmd)
+        return cmds

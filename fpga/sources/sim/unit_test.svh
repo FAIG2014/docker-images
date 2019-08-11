@@ -1,5 +1,5 @@
 
-`include "logs.sv"
+`include "logs.svh"
 
 `ifndef UNIT_TEST_SETUP
 `define UNIT_TEST_SETUP \
@@ -16,33 +16,22 @@
 `define LAST_STATUS unit_test_status
 `endif
 
-`ifndef ASSERT_TRUE
-`define ASSERT_TRUE(exp) \
-    if (exp) begin \
-        `ERROR("ASSERT_TRUE"); \
-        unit_test_error += 1 \
-        unit_test_status = 1; \
-    end else begin \
-        unit_test_status = 0; \
-    end
-`endif
-
 `ifndef ASSERT_FALSE
 `define ASSERT_FALSE(exp) \
-    if (!exp) begin \
-        `ERROR("ASSERT_FALSE"); \
-        unit_test_error += 1 \
+    if (exp) begin \
+        `LOG_ERROR("ASSERT_FALSE"); \
+        unit_test_error += 1; \
         unit_test_status = 1; \
     end else begin \
         unit_test_status = 0; \
     end
 `endif
 
-`ifndef ASSERT_EQUAL
-`define ASSERT_EQUAL(a,b) \
-    if (a === b) begin \
-        `ERROR("ASSERT_EQUAL"); \
-        unit_test_error += 1 \
+`ifndef ASSERT_TRUE
+`define ASSERT_TRUE(exp) \
+    if (!exp) begin \
+        `LOG_ERROR("ASSERT_TRUE"); \
+        unit_test_error += 1; \
         unit_test_status = 1; \
     end else begin \
         unit_test_status = 0; \
@@ -51,9 +40,20 @@
 
 `ifndef ASSERT_NOT_EQUAL
 `define ASSERT_NOT_EQUAL(a,b) \
+    if (a === b) begin \
+        `LOG_ERROR("ASSERT_NOT_EQUAL"); \
+        unit_test_error += 1; \
+        unit_test_status = 1; \
+    end else begin \
+        unit_test_status = 0; \
+    end
+`endif
+
+`ifndef ASSERT_EQUAL
+`define ASSERT_EQUAL(a,b) \
     if (a !== b) begin \
-        `ERROR("ASSERT_NOT_EQUAL"); \
-        unit_test_error += 1 \
+        `LOG_ERROR("ASSERT_EQUAL"); \
+        unit_test_error += 1; \
         unit_test_status = 1; \
     end else begin \
         unit_test_status = 0; \
@@ -73,21 +73,23 @@
     begin : _NAME_ \
         string _testName; \
         _testName = `"_NAME_`"; \
-        `INFO($sformatf(`"%s::RUNNING`", _testName)); \
+        `LOG_INFO($sformatf(`"%s::RUNNING`", _testName)); \
         setup(); \
         unit_test_error = 0; \
-        unit_test_nb_test = unit_test_nb_test + 1;
+        unit_test_nb_test = unit_test_nb_test + 1; \
+            begin
 `endif
 /* verilator lint_on WIDTH */
 
 `ifndef UNIT_TEST_END
 `define UNIT_TEST_END \
+            end \
         teardown(); \
         if (unit_test_error == 0) begin \
             unit_test_nb_test_success = unit_test_nb_test_success + 1; \
-            `INFO_GREEN($sformatf(`"%s::PASSED`", _testName)); \
+            `LOG_INFO_GREEN($sformatf(`"%s::PASSED`", _testName)); \
         end else begin \
-            `INFO($sformatf(`"%s::FAILED`", _testName)); \
+            `LOG_INFO($sformatf(`"%s::FAILED`", _testName)); \
             unit_test_error_total += unit_test_error; \
         end \
     end

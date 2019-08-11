@@ -15,5 +15,9 @@ package math_pkg;
         clog2_range = clog2(value);
     endfunction
 
+    function integer get_word_count_for_size(int size, int word_size);
+        get_word_count_for_size = size / word_size + (size % word_size? 1 :0);
+        return get_word_count_for_size;
+    endfunction
 
 endpackage
