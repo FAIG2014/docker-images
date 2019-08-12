@@ -25,7 +25,7 @@ def find_sv_unit_tests():
         # Check only the files
         if os.path.isfile(_file):
             # Ensure its at least a verilog file
-            if _file.endswith("unit_test.sv") or _file.endswith("unit_test.v"):
+            if _file.endswith("unit_test.sv"):
                 files.append(os.path.join(current_folder, _file))
     return files
 
@@ -57,6 +57,7 @@ def entry_point():
     simulator   = "modelsim"
 
     for test in tests_sv:
+        basename_test = os.path.basename(test)
 
         if "iverilog" in simulator or "icarus" in simulator:
             compiler = compilers.CompilerIverilog()
@@ -65,7 +66,7 @@ def entry_point():
             continue
 
         elif "modelsim" in simulator:
-            compiler = compilers.CompilerModelsim(build_dir=build_dir)
+            compiler = compilers.CompilerModelsim(build_dir=os.path.join(build_dir, basename_test))
 
         elif "vivado" in simulator:
             compiler = compilers.CompilerVivado(build_dir=build_dir)

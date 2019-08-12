@@ -3,7 +3,7 @@
     "source_files" : [
     ],
     "lib_path_dependencies" : [
-        "sim",
+        "sim/unit_tests",
         "sim/avalon_st"
     ]
 

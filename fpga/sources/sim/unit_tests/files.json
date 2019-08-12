@@ -1,7 +1,8 @@
 {
 
     "source_files" : [
-        "unit_test.svh"
+        "unit_test.svh",
+        "logger_pkg.sv"
     ],
     "lib_path_dependencies" : [
         "rtl/misc"
