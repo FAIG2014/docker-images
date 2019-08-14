@@ -25,9 +25,9 @@ module packet_pkg_unit_test;
 
             
 
-    `UNIT_TESTS
+    `ALL_UNIT_TESTS_BEGIN
 
-        `UNIT_TEST(compare_test)
+        `UNIT_TEST_BEGIN(compare_test)
             packet_pkg::Packet my_packet0;
             packet_pkg::Packet my_packet1;
 
@@ -42,7 +42,7 @@ module packet_pkg_unit_test;
 
         `UNIT_TEST_END
 
-        `UNIT_TEST(copy_test)
+        `UNIT_TEST_BEGIN(copy_test)
             packet_pkg::Packet my_packet0;
             packet_pkg::Packet my_packet1;
 
@@ -59,7 +59,7 @@ module packet_pkg_unit_test;
         `UNIT_TEST_END
 
 
-    `UNIT_TESTS_END
+    `ALL_UNIT_TESTS_END
 
 endmodule
 
