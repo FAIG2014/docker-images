@@ -8,7 +8,7 @@ ARG MODELSIM=ModelSimSetup-18.1.0.625-linux.run
 
 
 
-ENV QUARTUS_INSTALL_DIR=/opt/intelFPGA/18.0
+ENV QUARTUS_INSTALL_DIR=/opt/intelFPGA/18.1
 
 RUN yum install -y unixODBC.i686 ncurses-compat-libs.i686 ncurses-libs.i686 libXext.i686 \
                     glibc.i686 libXft.i686 libpng15.i686 \
