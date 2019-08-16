@@ -1,4 +1,4 @@
-FROM fedora31-gui:latest
+FROM fedora31-fpga_simu:latest
 
 USER root
 
