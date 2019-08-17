@@ -1,0 +1,19 @@
+{
+
+    "project_files" : [
+        "assignment_defaults.qdf",
+        "quartus_project.qpf",
+        "quartus_project.qsf"
+
+    ],
+    "source_files" : [
+        "DE2_115_GOLDEN_TOP.v"
+    ],
+    "lib_path_dependencies" : [
+        "rtl/misc",
+        "rtl/avalon_st"
+    ],
+    "need_be_included": "false"
+
+}
+

@@ -14,7 +14,7 @@ import json
 from typing import List
 
 def get_workspace_path(json_path):
-    workspace_path = json_path.split("fpga-projects/fpga/")[0]
+    workspace_path = json_path.split("/fpga-projects/")[0]
     return workspace_path
 
 def get_source_path(json_path):
@@ -87,6 +87,7 @@ class FpgaLib(object):
             
             files.extend(FpgaLib(lib).source_files)
         
+        files.extend(self.source_files)
         return files
 
     def get_full_include_dependencies(self, exclude_lib:List[str]=[]) -> List[str]:
@@ -101,8 +102,6 @@ class FpgaLib(object):
 class DependencyBuilder(object):
     def __init__(self, path:str):
         self.path = path
-        self.lib_deps = []
-        self.file_deps = []
         
         # build the current lib
         curr = FpgaLib(path)
@@ -113,27 +112,40 @@ class DependencyBuilder(object):
         print("includes:%s " % curr.get_full_include_dependencies())
 
 
+class MultiDependencyBuilder(object):
+    def __init__(self, path0:str, path1:str):
+        self.path0 = path0
+        self.path1 = path1
+       
 
 
+    def get_full_lib_dependencies(self, exclude_libs:List[str]=[]) -> List[str]:
+        return FpgaLib(self.path0).get_full_lib_dependencies()
 
+
+    def get_full_file_dependencies(self, exclude_file:List[str]=[]) -> List[str]:
+        full_lib_dependencies = self.get_full_lib_dependencies()
+        files = []
+        for lib in full_lib_dependencies:
+            files.extend(FpgaLib(lib).source_files)
         
+        files.extend(FpgaLib(self.path0).source_files)
+        return files
 
-    def __str__(self):
-        return "dep location: %s \nlib_deps:%s \nfile_deps:%s"  % (self.path, self.lib_deps, self.file_deps)
-
+    def get_full_include_dependencies(self, exclude_lib:List[str]=[]) -> List[str]:
+        full_lib_dependencies = self.get_full_lib_dependencies()
+        includes = []
+        for lib in full_lib_dependencies:
+            if FpgaLib(lib).need_be_included:
+                includes.append(lib)
+        
+        return includes
 
 
 if __name__ == '__main__':
 
     current_path = os.getcwd()
-
     dep_builder = DependencyBuilder(current_path)
-
-    #print(dep_builder)
-
-    #print(get_source_path(current_path) )
-
-
 
 
 
