@@ -27,6 +27,7 @@ def entry_point():
 
 
     compiler.make_project()
+    #compiler.build_bitstream()
 
 
 

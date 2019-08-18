@@ -45,9 +45,13 @@ class HardwareCompiler(object):
         self.dependencies = deps.MultiDependencyBuilder(self.board_path, self.top_path) 
 
 
-    def make_project(self):
+    def make_project(self, clean=True):
         cmds = []
         
+        if clean:
+            shutil.rmtree(self.build_dir)
+            pathlib.Path(self.build_dir).mkdir(parents=True, exist_ok=True)
+
         # first copy all the boards files into the build directory
         board_json_file_path = os.path.join(self.board_path, "files.json")
         with open(board_json_file_path, "r") as json_file:
@@ -67,6 +71,20 @@ class HardwareCompiler(object):
 
     def create_cmds_make_project(self):
         raise NotImplementedError("Subclasses should implement this!")
+
+
+    def build_bitstream(self):
+        cmds = self.create_cmds_build_bitstream()
+        for cmd in cmds:
+            print("RUNING %s" % cmd)
+            cmd_ret = subprocess.call(cmd, shell=True, cwd=self.build_dir)
+            if cmd_ret:
+                raise Exception()
+
+    def create_cmds_build_bitstream(self):
+        raise NotImplementedError("Subclasses should implement this!")
+
+
 
 class QuartusCompiler(HardwareCompiler):
 
@@ -89,4 +107,24 @@ class QuartusCompiler(HardwareCompiler):
 
         return []
 
-# set_global_assignment -name SEARCH_PATH "../other_dir/library1"
+    def create_cmds_build_bitstream(self):
+        
+        cmds = []
+
+        cmds.append("echo \"Running Synthesis\" ")
+        cmds.append("quartus_map --read_settings_files=on --write_settings_files=off quartus_project -c quartus_project")
+
+
+        cmds.append("echo \"Running fitter\" ")
+        cmds.append("quartus_fit --read_settings_files=off --write_settings_files=off quartus_project -c quartus_project")
+
+
+        cmds.append("echo \"Running assembly\" ")
+        cmds.append("quartus_asm --read_settings_files=on --write_settings_files=off quartus_project -c quartus_project")
+
+        cmds.append("echo \"Running timing analysis\" ")
+        cmds.append("quartus_sta quartus_project -c quartus_project")
+
+
+
+        return cmds

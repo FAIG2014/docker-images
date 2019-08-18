@@ -1080,7 +1080,7 @@ set_instance_assignment -name IO_STANDARD LVDS -to HSMC_CLKIN_N1
 set_instance_assignment -name IO_STANDARD "3.0-V LVTTL" -to HSMC_CLKIN0
 set_global_assignment -name CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION "USE AS REGULAR IO"
 set_global_assignment -name SMART_RECOMPILE ON
-set_global_assignment -name NUM_PARALLEL_PROCESSORS 2
+set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
 set_instance_assignment -name IO_MAXIMUM_TOGGLE_RATE "0 MHz" -to HEX2
 set_instance_assignment -name IO_MAXIMUM_TOGGLE_RATE "0 MHz" -to HEX0
 set_instance_assignment -name IO_MAXIMUM_TOGGLE_RATE "0 MHz" -to HEX1
