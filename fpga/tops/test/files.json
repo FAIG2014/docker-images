@@ -1,0 +1,13 @@
+{
+
+    "source_files" : [
+        "generic_top.sv"
+    ],
+    "lib_path_dependencies" : [
+        "rtl/misc",
+        "rtl/avalon_st"
+    ],
+    "need_be_included": "false"
+
+}
+

@@ -10,6 +10,7 @@ docker run \
     -it \
     --rm \
     --net=host \
+    --device=/dev/bus/usb/ \
     -e DISPLAY \
     -e SHELL \
     -e LOCAL_USER_ID=$(id -u)\
