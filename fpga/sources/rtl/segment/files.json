@@ -1,10 +1,10 @@
 {
 
     "source_files" : [
-        "generic_top.sv"
+        "segment_pkg.sv"
     ],
     "lib_path_dependencies" : [
-        "rtl/segment"
+
     ],
     "need_be_included": "false"
 

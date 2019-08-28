@@ -12,6 +12,7 @@ Usage:
 import os
 import json
 from typing import List
+import itertools
 
 def get_workspace_path(json_path):
     workspace_path = json_path.split("/fpga-projects/")[0]
@@ -120,7 +121,15 @@ class MultiDependencyBuilder(object):
 
 
     def get_full_lib_dependencies(self, exclude_libs:List[str]=[]) -> List[str]:
-        return FpgaLib(self.path0).get_full_lib_dependencies()
+
+        path0_lib = FpgaLib(self.path0).get_full_lib_dependencies()
+        path1_lib = FpgaLib(self.path1).get_full_lib_dependencies()
+
+        both = []
+        for lib in itertools.chain(path0_lib, path1_lib):
+            if lib not in both:
+                both.append(lib)
+        return both
 
 
     def get_full_file_dependencies(self, exclude_file:List[str]=[]) -> List[str]:

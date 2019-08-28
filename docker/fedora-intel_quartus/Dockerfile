@@ -27,7 +27,7 @@ RUN yum install -y libnsl.x86_64 libpng12.x86_64 \
 
 # install using the wget (slow and clean)
 RUN cd /tmp \
-    && echo "downloading quartus" \
+    && echo "downloading quartus from: ${MIRROR}" \
     && wget -q $MIRROR$QUARTUS \
     && wget -q $MIRROR$DEVICE_CYCLONE \
     && echo "installing quartus" \
