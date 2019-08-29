@@ -1,7 +1,8 @@
 {
 
     "source_files" : [
-        "segment_pkg.sv"
+        "segment_pkg.sv",
+        "single_segment.sv"
     ],
     "lib_path_dependencies" : [
 

@@ -7,7 +7,9 @@
 
     ],
     "source_files" : [
-        "DE2_115_GOLDEN_TOP.v"
+        "DE2_115_fpga_top.sv",
+        "reset_generator.sv"
+
     ],
     "lib_path_dependencies" : [
         "rtl/misc",

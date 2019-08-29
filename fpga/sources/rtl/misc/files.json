@@ -2,7 +2,8 @@
 
     "source_files" : [
         "math_pkg.sv",
-        "logs.svh"
+        "logs.svh",
+        "bcd_counter.sv"
     ],
     "lib_path_dependencies" : [
 
