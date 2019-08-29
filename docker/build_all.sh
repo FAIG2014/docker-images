@@ -13,8 +13,8 @@ docker pull fedora:31
 docker build -t fedora31-gui fedora-gui
 
 
+# FPGA simulation
 docker build -t fedora31-modelsim fedora-modelsim --build-arg MIRROR=http://192.168.1.189/docker/fedora-modelsim/
-
 docker build -t fedora31-fpga_simu fedora-fpga_simu
 
 

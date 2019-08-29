@@ -23,9 +23,12 @@ ENV QT_GRAPHICSSYSTEM "native"
 
 # install using the wget (slow and clean)
 RUN cd /tmp \
-    && wget -q $MIRROR$DIAMOND \
-    && yum install -y /tmp/$DIAMOND \
-    && rm /tmp/$DIAMOND \
+    && echo "downloading lattice diamond from: ${MIRROR}" \
+    && time wget -q $MIRROR$DIAMOND \
+    && echo "installing lattice diamond" \
+    && time yum install -y /tmp/$DIAMOND \
+    && echo "cleaning up" \
+    && rm -fr /tmp/* \
     && yum clean all
 
 

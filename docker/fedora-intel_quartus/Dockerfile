@@ -36,6 +36,7 @@ RUN cd /tmp \
     && echo "cleaning up" \
     && rm /tmp/$QUARTUS \
     && rm /tmp/$DEVICE_CYCLONE \
+    && rm /tmp/* \
     && echo "docker creating diff" 
 
 
