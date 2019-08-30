@@ -11,8 +11,14 @@ package math_pkg;
     endfunction
 
     function integer clog2_range(longint value);
-        // TODO: this is not done properly 
         clog2_range = clog2(value);
+
+        if (clog2_range > 0) begin
+            return clog2_range -1;
+        end
+        else begin
+            return 0;
+        end
     endfunction
 
     function integer get_word_count_for_size(int size, int word_size);

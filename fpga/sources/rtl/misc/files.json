@@ -3,7 +3,9 @@
     "source_files" : [
         "math_pkg.sv",
         "logs.svh",
-        "bcd_counter.sv"
+        "bcd_counter.sv",
+        "time_pkg.sv",
+        "timer.sv"
     ],
     "lib_path_dependencies" : [
 
