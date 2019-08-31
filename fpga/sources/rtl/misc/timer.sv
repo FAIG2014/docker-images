@@ -7,7 +7,7 @@
 module timer
     #(
         parameter CLK_FREQ_MZ,
-        parameter TIMEER_PERIOD_NS
+        parameter TIMER_PERIOD_NS
     )
     (
         input  clk,
@@ -17,8 +17,8 @@ module timer
         output start_period
     );
 
-    parameter NB_CLK = time_pkg::nb_clk_for_time(.freq_mz(CLK_FREQ_MZ), .time_needed_ns(TIMEER_PERIOD_NS) );
-    parameter COUNTER_RANGE = math_pkg::clog2_range(NB_CLK);
+    parameter NB_CLK = time_pkg::nb_clk_for_time(.freq_mz(CLK_FREQ_MZ), .time_needed_ns(TIMER_PERIOD_NS) );
+    parameter COUNTER_RANGE = math_pkg::vect_range(NB_CLK);
     logic	[COUNTER_RANGE:0]	counter  = '0;
     logic start_period_reg;
 

@@ -24,6 +24,7 @@ package segment_pkg;
 		4'h0: seg_value = 7'b1000000;
 		endcase
 
+        return seg_value;
 
     endfunction
 
@@ -48,9 +49,10 @@ package segment_pkg;
 		4'hd: seg_value = 7'b0000110;  // will put E as an error
 		4'he: seg_value = 7'b0000110;  // will put E as an error
 		4'hf: seg_value = 7'b0000110;  // will put E as an error
-		4'h0: seg_value = 7'b0000110;  // will put E as an error
+		4'h0: seg_value = 7'b1000000;  // will put E as an error
 		endcase
 
+        return seg_value;
 
     endfunction
 

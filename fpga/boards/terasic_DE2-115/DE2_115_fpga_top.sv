@@ -552,6 +552,74 @@ inout		        [6:0]		EX_IO;
     reset_generator reset_generator_CLOCK3_50 (.clk(CLOCK3_50), .reset(CLOCK3_50_reset) );
     reset_generator reset_generator_ENETCLK_25 (.clk(ENETCLK_25), .reset(ENETCLK_25_reset) );
 
+    logic start_period;
+
+    timer
+        #(
+            .CLK_FREQ_MZ(50),
+            .TIMER_PERIOD_NS(nano_second_time_pkg::SECOND)
+        )
+    U_timer
+        (
+            .clk(CLOCK_50),
+            .reset(CLOCK_50_reset),
+
+            .start_period(start_period)
+        );
+
+    localparam BCD_NUM = 8;
+    logic [3:0]       bcds[BCD_NUM-1:0];
+
+    bcd_counter
+        #(
+            .BCD_NUM(BCD_NUM)
+        )
+    U_bcd_counter
+        (
+            .clk(CLOCK_50),
+            .reset(CLOCK_50_reset),
+
+            .incr(start_period),
+            .reset_counter(1'b0),
+            .bcds(bcds)
+        );
 
 
+    logic [36:0]       segments[BCD_NUM-1:0];
+
+    generate
+        genvar gv;
+
+        for (gv = 0 ; gv < BCD_NUM ; gv++) begin: gen_for_single_segment
+
+            single_segment 
+            #(
+                .BASE_10(0)
+            )
+            U_single_segment 
+            (
+                .clk(CLOCK_50),
+                .reset(CLOCK_50_reset),
+
+                .value(bcds[gv]),
+                .segment(segments[gv])
+
+            );
+        end
+
+    endgenerate
+
+
+    assign HEX0 = segments[0];
+    assign HEX1 = segments[1];
+    assign HEX2 = segments[2];
+    assign HEX3 = segments[3];
+    assign HEX4 = segments[4];
+    assign HEX5 = segments[5];
+    assign HEX6 = segments[6];
+    assign HEX7 = segments[7];
+
+    assign LEDR[0] = start_period;
+    assign LEDR[1] = CLOCK_50_reset;
+    assign LEDG[1] = bcds[0];
 endmodule

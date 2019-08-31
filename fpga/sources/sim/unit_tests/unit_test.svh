@@ -32,7 +32,7 @@
 
 `define ASSERT_NOT_EQUAL(a,b) \
     if (a === b) begin \
-        `LOG_ERROR("ASSERT_NOT_EQUAL"); \
+        `LOG_ERROR("ASSERT_NOT_EQUAL ( %p == %p) ", a,b ); \
         unit_test_error += 1; \
         unit_test_status = 1; \
     end else begin \
@@ -41,7 +41,7 @@
 
 `define ASSERT_EQUAL(a,b) \
     if (a !== b) begin \
-        `LOG_ERROR("ASSERT_EQUAL"); \
+        `LOG_ERROR("ASSERT_EQUAL ( %p != %p) ", a,b ); \
         unit_test_error += 1; \
         unit_test_status = 1; \
     end else begin \

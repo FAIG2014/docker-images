@@ -15,9 +15,9 @@ module	reset_generator
     always_ff@(posedge clk) begin
         if(counter != '1) begin
             counter	<=	counter+1;
-            reset	<=	1'b0;
-        end else begin
             reset	<=	1'b1;
+        end else begin
+            reset	<=	1'b0;
         end
 end
 

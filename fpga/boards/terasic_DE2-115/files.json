@@ -3,7 +3,8 @@
     "project_files" : [
         "assignment_defaults.qdf",
         "quartus_project.qpf",
-        "quartus_project.qsf"
+        "quartus_project.qsf",
+        "quartus_project.sdc"
 
     ],
     "source_files" : [

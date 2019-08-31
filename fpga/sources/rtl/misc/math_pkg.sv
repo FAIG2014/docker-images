@@ -10,11 +10,11 @@ package math_pkg;
         return clog2;
     endfunction
 
-    function integer clog2_range(longint value);
-        clog2_range = clog2(value);
+    function integer vect_range(longint value);
+        vect_range = clog2(value);
 
-        if (clog2_range > 0) begin
-            return clog2_range -1;
+        if (vect_range > 0) begin
+            return vect_range -1;
         end
         else begin
             return 0;
