@@ -4,7 +4,8 @@ module	reset_generator
     )
     (
         input  clk,
-        output reset
+        input  in_reset,
+        output out_reset
     );
 
 
@@ -13,11 +14,16 @@ module	reset_generator
 
 
     always_ff@(posedge clk) begin
-        if(counter != '1) begin
-            counter	<=	counter+1;
-            reset	<=	1'b1;
+        if (in_reset == 1'b1) begin
+            counter     <= '0;
+            out_reset	<=	1'b1;
         end else begin
-            reset	<=	1'b0;
+            if(counter != '1) begin
+                counter	<=	counter+1;
+                out_reset	<=	1'b1;
+            end else begin
+                out_reset	<=	1'b0;
+            end
         end
 end
 

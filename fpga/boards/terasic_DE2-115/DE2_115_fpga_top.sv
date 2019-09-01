@@ -547,10 +547,10 @@ inout		        [6:0]		EX_IO;
     logic   CLOCK3_50_reset;
     logic   ENETCLK_25_reset;
 
-    reset_generator reset_generator_CLOCK_50 (.clk(CLOCK_50), .reset(CLOCK_50_reset) );
-    reset_generator reset_generator_CLOCK2_50 (.clk(CLOCK2_50), .reset(CLOCK2_50_reset) );
-    reset_generator reset_generator_CLOCK3_50 (.clk(CLOCK3_50), .reset(CLOCK3_50_reset) );
-    reset_generator reset_generator_ENETCLK_25 (.clk(ENETCLK_25), .reset(ENETCLK_25_reset) );
+    reset_generator reset_generator_CLOCK_50    (.clk(CLOCK_50),    .in_reset(~KEY[0]),  .out_reset(CLOCK_50_reset) );
+    reset_generator reset_generator_CLOCK2_50   (.clk(CLOCK2_50),   .in_reset(~KEY[0]),  .out_reset(CLOCK2_50_reset) );
+    reset_generator reset_generator_CLOCK3_50   (.clk(CLOCK3_50),   .in_reset(~KEY[0]),  .out_reset(CLOCK3_50_reset) );
+    reset_generator reset_generator_ENETCLK_25  (.clk(ENETCLK_25),  .in_reset(~KEY[0]),  .out_reset(ENETCLK_25_reset) );
 
     logic start_period;
 
