@@ -34,12 +34,17 @@ derive_clock_uncertainty
 #**************************************************************
 # Set Input Delay
 #**************************************************************
-
+set_input_delay -clock CLOCK_50 -clock_fall 8 [get_ports {KEY*}]
+#set_input_delay -clock altera_reserved_tck -clock_fall 8 [get_ports {altera_reserved_*}]
 
 
 #**************************************************************
 # Set Output Delay
 #**************************************************************
+set_output_delay -clock CLOCK_50 7 [get_ports {HEX*}]
+set_output_delay -clock CLOCK_50 7 [get_ports {LCD_*}]
+set_output_delay -clock CLOCK_50 7 [get_ports {LED*}]
+#set_output_delay -clock altera_reserved_tck -clock_fall 8 [get_ports {altera_reserved_*}]
 
 
 

@@ -239,7 +239,7 @@ module DE2_115_fpga_top(
 //=======================================================
 //  PARAMETER declarations
 //=======================================================
-
+genvar gv;
 
 //=======================================================
 //  PORT declarations
@@ -567,6 +567,27 @@ inout		        [6:0]		EX_IO;
             .start_period(start_period)
         );
 
+    logic               [3:0]       KEY_DEBOUCE;
+
+generate
+
+    for( gv = 0; gv < 4; gv++ ) begin : KEY_DEBOUNCE_INST
+
+        debouncer
+            #(
+                .CLK_FREQ_MZ(50)
+            )
+        U_debouncer
+            (
+                .clk(CLOCK_50),
+                .reset(CLOCK_50_reset),
+
+                .button(KEY[gv]),
+                .button_deboused(KEY_DEBOUCE[gv])
+            );
+    end
+endgenerate
+
     localparam BCD_NUM = 8;
     logic [3:0]       bcds[BCD_NUM-1:0];
 
@@ -585,10 +606,9 @@ inout		        [6:0]		EX_IO;
         );
 
 
-    logic [36:0]       segments[BCD_NUM-1:0];
+    logic [7:0]       segments[BCD_NUM-1:0];
 
     generate
-        genvar gv;
 
         for (gv = 0 ; gv < BCD_NUM ; gv++) begin: gen_for_single_segment
 
@@ -622,4 +642,77 @@ inout		        [6:0]		EX_IO;
     assign LEDR[0] = start_period;
     assign LEDR[1] = CLOCK_50_reset;
     assign LEDG[1] = bcds[0];
+
+
+logic                   refresh;
+string_pkg::string_t    line0;
+string_pkg::string_t    line1;
+
+LCD_printer 			
+    #(
+        .CLK_FREQ_MZ(50)
+    )
+    U_LCD_printer	
+    (	//	Host Side
+        .clk(CLOCK_50),
+        .reset(CLOCK_50_reset),
+
+        .refresh(refresh),
+        .line0(line0),
+        .line1(line1),
+
+        //	LCD Side
+        .LCD_DATA(LCD_DATA),
+        .LCD_RW(LCD_RW),
+        .LCD_EN(LCD_EN),
+        .LCD_RS(LCD_RS),
+        .LCD_ON(LCD_ON),
+        .LCD_BLON(LCD_BLON)
+    );
+
+
+    logic       key_up;
+    logic       key_up_reg;
+    logic [2:0] current_seting;
+    byte        current_seting_char;
+
+
+    assign key_up = KEY_DEBOUCE[1];
+
+    always begin
+        line0 = string_pkg::string_t'("X:wrong setting ");
+        line1 = string_pkg::string_t'("test            ");
+
+        case(current_seting)
+            0: begin
+                line0 = string_pkg::string_t'("0: time counter ");
+                line1 = string_pkg::string_t'("test            ");
+            end
+            default: begin
+            end
+        endcase
+
+        line1[0] = current_seting_char;
+    end
+
+
+
+always_ff@(posedge CLOCK_50) begin
+    if (CLOCK_50_reset == 1'b1) begin
+        current_seting  <= '0;
+        key_up_reg      <= '0;
+        refresh         <= '0;
+
+    end else begin
+        if (key_up) begin
+            current_seting <= current_seting +1;
+        end
+        current_seting_char <= current_seting + 8'h30;
+        key_up_reg <= key_up;
+        refresh  <= key_up_reg;
+    end
+end
+
+
+
 endmodule

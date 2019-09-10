@@ -3,12 +3,13 @@
 run build_fpga
 
 Usage:
-    build_fpga  <board_name> <top_name> [build_path=base_build_path]
+    build_fpga  <board_name> <top_name> [build_path=base_build_path] [--start_gui]
 
 Options:
     <board_name>           filter to run only a subset of our test files
     <top_name>             filter to run only a subset of our test files
     <file_name>            filter to run only a subset of our test files
+    --start_gui            will start the gui
 """
 
 import os
@@ -25,9 +26,13 @@ def entry_point():
 
     compiler = compilers.QuartusCompiler(args["<board_name>"], args["<top_name>"])
 
-
     compiler.make_project()
-    compiler.build_bitstream()
+
+    if args["--start_gui"]:
+        compiler.start_gui()
+    else:
+        
+        compiler.build_bitstream()
 
 
 

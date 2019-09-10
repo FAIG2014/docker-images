@@ -26,4 +26,30 @@ package math_pkg;
         return get_word_count_for_size;
     endfunction
 
+
+    function longint max(longint a, longint b, longint c=0, longint d=0);
+        longint max_ab;
+        longint max_cd;
+
+        if (a>b) begin
+            max_ab = a;
+        end 
+        else begin
+            max_ab = b;
+        end
+
+        if (c>d) begin
+            max_cd = c;
+        end 
+        else begin
+            max_cd = d;
+        end
+
+        if (max_ab > max_cd ) begin
+            return max_ab;
+        end
+        else begin
+            return max_cd;
+        end
+    endfunction
 endpackage

@@ -17,13 +17,12 @@ module timer
         output start_period
     );
 
-    parameter NB_CLK = time_pkg::nb_clk_for_time(.freq_mz(CLK_FREQ_MZ), .time_needed_ns(TIMER_PERIOD_NS) );
-    parameter COUNTER_RANGE = math_pkg::vect_range(NB_CLK);
+    localparam NB_CLK = time_pkg::nb_clk_for_time(.freq_mz(CLK_FREQ_MZ), .time_needed_ns(TIMER_PERIOD_NS) );
+    localparam COUNTER_RANGE = math_pkg::vect_range(NB_CLK);
     logic	[COUNTER_RANGE:0]	counter  = '0;
     logic start_period_reg;
 
     assign start_period = start_period_reg;
-
 
     always_ff@(posedge clk) begin
         if (reset == 1'b1) begin

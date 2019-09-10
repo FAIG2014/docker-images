@@ -4,7 +4,8 @@
         "assignment_defaults.qdf",
         "quartus_project.qpf",
         "quartus_project.qsf",
-        "quartus_project.sdc"
+        "quartus_project.sdc",
+        "quartus_project.stp"
 
     ],
     "source_files" : [

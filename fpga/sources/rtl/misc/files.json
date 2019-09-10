@@ -5,7 +5,8 @@
         "logs.svh",
         "bcd_counter.sv",
         "time_pkg.sv",
-        "timer.sv"
+        "timer.sv",
+        "string_pkg.sv"
     ],
     "lib_path_dependencies" : [
 

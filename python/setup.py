@@ -65,6 +65,8 @@ setuptools.setup(
     entry_points={
         'console_scripts': [
                 'create_sv_test = pyfgag.create_sv_test:entry_point',
+                'run_sv_test    = pyfgag.run_sv_test:entry_point',
+                'build_fpga     = pyfgag.build_fpga:entry_point',
 
         ]
     }

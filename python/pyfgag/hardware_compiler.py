@@ -84,6 +84,17 @@ class HardwareCompiler(object):
     def create_cmds_build_bitstream(self):
         raise NotImplementedError("Subclasses should implement this!")
 
+    def start_gui(self):
+        cmds = self.create_cmds_start_gui()
+        for cmd in cmds:
+            print("RUNING %s" % cmd)
+            cmd_ret = subprocess.call(cmd, shell=True, cwd=self.build_dir)
+            if cmd_ret:
+                raise Exception()
+
+    def create_cmds_start_gui(self):
+        raise NotImplementedError("Subclasses should implement this!")
+
 
 
 class QuartusCompiler(HardwareCompiler):
@@ -128,3 +139,11 @@ class QuartusCompiler(HardwareCompiler):
 
 
         return cmds
+
+    def create_cmds_start_gui(self):
+        cmds = []
+        cmds.append("echo \"start gui\" ")
+        cmds.append("quartus quartus_project -c quartus_project")
+        return cmds
+
+    

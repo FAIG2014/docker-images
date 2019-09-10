@@ -4,7 +4,7 @@
         "generic_top.sv"
     ],
     "lib_path_dependencies" : [
-        "rtl/segment"
+        "rtl/terasic"
     ],
     "need_be_included": "false"
 

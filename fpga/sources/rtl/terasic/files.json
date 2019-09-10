@@ -1,0 +1,17 @@
+{
+
+    "source_files" : [
+        "segment_pkg.sv",
+        "single_segment.sv",
+        "LCD_Controller.sv",
+        "LCD_printer.sv",
+        "LCD_Controller_pkg.sv",
+        "debouncer.sv"
+    ],
+    "lib_path_dependencies" : [
+        "rtl/misc"
+    ],
+    "need_be_included": "false"
+
+}
+
